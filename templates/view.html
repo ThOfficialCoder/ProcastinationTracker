@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Procastination Entries</h2>
+    <table border="1">
+        <tr>
+            <th>Reason</th>
+            <th>Source</th>
+            <th>Feeling</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.reason }}</td>
+            <td>{{ user.source }}</td>
+            <td>{{ user.feeling }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+{% endblock %} 

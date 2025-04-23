@@ -1,0 +1,9 @@
+{% from "_formhelpers.html" import render_field %}
+<form method=post>
+  <dl>
+    {{ render_field(form.reason) }}
+    {{ render_field(form.source) }}
+    {{ render_field(form.feeling) }}
+  </dl>
+  <p><input type=submit value=Register>
+</form>
