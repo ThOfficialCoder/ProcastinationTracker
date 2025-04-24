@@ -1,0 +1,13 @@
+{% from "_formhelpers.html" import render_field %}
+<form method=post>
+  <dl>
+    {{ render_field(form.task) }}
+  </dl>
+  <p><input type=submit value=Add Task>
+</form>
+<ul>
+    {% for task in tasks %}
+    <li>{{ task.task }}</li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('home') }}">Back to Home</a>

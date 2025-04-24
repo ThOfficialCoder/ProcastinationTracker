@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
 from wtforms import Form, BooleanField, StringField, validators
-from models import User
+from models import User, Task
 from database import db_session, init_db
 
 app = Flask(__name__)
@@ -19,6 +19,9 @@ class ProcastinationForm(Form):
     source = StringField('Source', validators=[validators.input_required()])
     feeling = StringField('Feeling', validators=[validators.input_required()])
 
+class TaskForm(Form):
+    task = StringField('Task', validators=[validators.input_required()])
+
 @app.route("/form", methods=['GET', 'POST'])
 def form():
     form = ProcastinationForm(request.form)
@@ -35,6 +38,17 @@ def form():
 def view():
     users = db_session.query(User).all()
     return render_template('view.html', users=users)
+
+@app.route("/tasks", methods=['GET', 'POST'])
+def tasks():
+    form = TaskForm(request.form)
+    if request.method == 'POST' and form.validate():
+        task = Task(form.task.data)
+        db_session.add(task)
+        db_session.commit()
+        flash('Task added successfully')
+    tasks = db_session.query(Task).all()
+    return render_template('tasks.html', form=form, tasks=tasks)
 
 if __name__ == "__main__":
     init_db()
